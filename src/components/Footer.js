@@ -65,7 +65,18 @@ export default function Footer() {
       </div>
 
       <div className="footer-bottom">
-        <p>Solutions by <strong>OD Labs</strong></p>
+        <p>
+          Solutions by <strong>
+            <a 
+              href="https://odlabs.me/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              style={{ textDecoration: 'none', color: 'inherit' }}
+            >
+              OD Labs
+            </a>
+          </strong>
+        </p>
         <p className="footer-meaning">
           <em>Del</em> · Delight &nbsp;|&nbsp; <em>Zen</em> · Harmony &nbsp;|&nbsp; <em>絆 Kizuna</em> · Bond
         </p>
