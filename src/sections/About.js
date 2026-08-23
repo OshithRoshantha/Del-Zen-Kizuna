@@ -21,7 +21,7 @@ export default function About() {
             </div>
             <div className="about-img-accent">
               <img
-                src="/images/meals/desserts/dragon-chocolate-lava-cake.jpg"
+                src="/images/locations/interior-2.jpg"
                 alt="Artisan dessert"
               />
             </div>
