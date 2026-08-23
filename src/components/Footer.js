@@ -37,7 +37,7 @@ export default function Footer() {
           <div className="footer-col">
             <h4>Navigate</h4>
             <ul>
-              {[['About', '#about'], ['Directors', '#directors'], ['Menu', '#menu'], ['Reservations', '#reservations']].map(([l, h]) => (
+              {[['Home', '#hero'], ['About', '#about'], ['Directors', '#directors'], ['Menu', '#menu'], ['Reservations', '#reservations']].map(([l, h]) => (
                 <li key={l}><button onClick={() => scrollTo(h)}>{l}</button></li>
               ))}
               <li><button onClick={() => navigate('/order')}>Order Online</button></li>

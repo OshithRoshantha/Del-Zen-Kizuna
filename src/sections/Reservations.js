@@ -27,8 +27,9 @@ export default function Reservations() {
           </h2>
           <div className={`divider-line fade-in delay-2 ${v ? 'visible' : ''}`} />
           <p className={`res-desc fade-in delay-2 ${v ? 'visible' : ''}`}>
-            Every table at Del Zen Kizuna is a stage for memories.
-            Reserve yours and let us craft an evening tailored to you.
+            Every table at Del Zen Kizuna is a carefully curated stage for unforgettable memories. 
+            Step into an atmosphere of quiet luxury and culinary artistry, where Sri Lankan heritage meets refined Asian fusion. 
+            Reserve your table with us and allow our team to craft an intimate, bespoke dining experience tailored exclusively to you.
           </p>
 
           <div className={`res-info-cards fade-in delay-3 ${v ? 'visible' : ''}`}>

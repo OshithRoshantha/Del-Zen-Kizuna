@@ -1,24 +1,53 @@
 .ratings {
-  background: var(--ink-mid);
-  padding: 8rem 4rem 0;
+  background: var(--ink);
+  padding: 0;
   position: relative;
   overflow: hidden;
 }
 
-.ratings::before {
+.ratings-reviews-bg {
+  position: relative;
+  padding: 7rem 4rem 5rem 4rem;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* Blurry ambient background image ONLY for reviews area */
+.ratings-reviews-bg::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(to right, transparent, rgba(201,168,76,0.4), transparent);
+  top: -24px;
+  left: -24px;
+  right: -24px;
+  bottom: -24px;
+  background-image: url('../assets/ratings-bg.jpg');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  filter: blur(1px) brightness(0.4) contrast(1);
+  transform: scale(1.08) translateZ(0);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Dark lighting & ambient vignette overlay */
+.ratings-reviews-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 50% 30%, rgba(10, 10, 10, 0.45) 0%, rgba(10, 10, 10, 0.85) 75%, rgba(10, 10, 10, 0.96) 100%),
+    linear-gradient(to bottom, rgba(10, 10, 10, 0.85) 0%, rgba(10, 10, 10, 0.55) 50%, rgba(10, 10, 10, 0.95) 100%);
+  z-index: 1;
+  pointer-events: none;
 }
 
 .ratings-header {
   text-align: center;
   max-width: 500px;
   margin: 0 auto 3rem;
+  position: relative;
+  z-index: 2;
 }
 
 .ratings-title {
@@ -29,19 +58,23 @@
   margin-bottom: 0.5rem;
 }
 
-.ratings-title em { font-style: italic; color: var(--gold); }
+.ratings-title em {
+  font-style: italic;
+  color: var(--gold);
+}
 
 /* Aggregate */
 .agg-strip {
   display: flex;
   justify-content: center;
   gap: 0;
-  margin-bottom: 4rem;
-  border: 1px solid rgba(201,168,76,0.15);
+  border: 1px solid rgba(201, 168, 76, 0.22);
+  background: rgba(18, 18, 18, 0.88);
   max-width: 700px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 4rem;
+  margin: 0 auto 4rem auto;
+  position: relative;
+  z-index: 2;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
 }
 
 .agg-item {
@@ -50,18 +83,20 @@
   flex-direction: column;
   align-items: center;
   padding: 1.5rem 2rem;
-  border-right: 1px solid rgba(201,168,76,0.1);
+  border-right: 1px solid rgba(201, 168, 76, 0.1);
   gap: 0.25rem;
 }
 
-.agg-item:last-child { border-right: none; }
+.agg-item:last-child {
+  border-right: none;
+}
 
 .agg-platform {
   font-family: 'Jost', sans-serif;
   font-size: 0.6rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: rgba(250,246,238,0.4);
+  color: rgba(250, 246, 238, 0.5);
 }
 
 .agg-rating {
@@ -72,19 +107,24 @@
   line-height: 1;
 }
 
-.stars { display: flex; gap: 2px; }
+.stars {
+  display: flex;
+  gap: 2px;
+}
 
 .star {
   font-size: 0.8rem;
-  color: rgba(201,168,76,0.2);
+  color: rgba(201, 168, 76, 0.2);
 }
 
-.star.filled { color: var(--gold); }
+.star.filled {
+  color: var(--gold);
+}
 
 .agg-reviews {
   font-family: 'Jost', sans-serif;
   font-size: 0.6rem;
-  color: rgba(250,246,238,0.3);
+  color: rgba(250, 246, 238, 0.4);
 }
 
 /* Review cards */
@@ -94,18 +134,23 @@
   gap: 1.5rem;
   max-width: 1300px;
   margin: 0 auto;
+  position: relative;
+  z-index: 2;
 }
 
 .review-card {
-  background: rgba(255,255,255,0.025);
-  border: 1px solid rgba(201,168,76,0.1);
+  background: rgba(18, 18, 18, 0.88);
+  border: 1px solid rgba(201, 168, 76, 0.2);
   padding: 2.5rem;
   position: relative;
-  transition: border-color 0.3s, transform 0.3s;
+  z-index: 2;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+  transition: border-color 0.3s, transform 0.3s, background 0.3s;
 }
 
 .review-card:hover {
-  border-color: rgba(201,168,76,0.3);
+  border-color: rgba(201, 168, 76, 0.5);
+  background: rgba(24, 24, 24, 0.95);
   transform: translateY(-4px);
 }
 
@@ -119,7 +164,7 @@
 .review-quote-mark {
   font-family: 'Cormorant Garamond', serif;
   font-size: 4rem;
-  color: rgba(201,168,76,0.2);
+  color: rgba(201, 168, 76, 0.2);
   line-height: 0.8;
   font-weight: 300;
   margin-top: -0.5rem;
@@ -130,7 +175,7 @@
   font-size: 1.05rem;
   font-weight: 300;
   font-style: italic;
-  color: rgba(250,246,238,0.75);
+  color: rgba(250, 246, 238, 0.75);
   line-height: 1.75;
   margin-bottom: 1.8rem;
 }
@@ -140,14 +185,14 @@
   align-items: center;
   gap: 1rem;
   padding-top: 1.2rem;
-  border-top: 1px solid rgba(201,168,76,0.1);
+  border-top: 1px solid rgba(201, 168, 76, 0.1);
 }
 
 .review-avatar {
   width: 44px;
   height: 44px;
-  background: rgba(201,168,76,0.15);
-  border: 1px solid rgba(201,168,76,0.3);
+  background: rgba(201, 168, 76, 0.15);
+  border: 1px solid rgba(201, 168, 76, 0.3);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -172,7 +217,7 @@
   font-family: 'Jost', sans-serif;
   font-size: 0.65rem;
   font-weight: 300;
-  color: rgba(250,246,238,0.35);
+  color: rgba(250, 246, 238, 0.35);
   letter-spacing: 0.05em;
 }
 
@@ -180,9 +225,11 @@
 .ratings-cta {
   text-align: center;
   padding: 6rem 2rem;
-  margin-top: 5rem;
-  border-top: 1px solid rgba(201,168,76,0.15);
+  margin-top: 0;
+  border-top: 1px solid rgba(201, 168, 76, 0.15);
   position: relative;
+  background: var(--ink-mid);
+  z-index: 2;
 }
 
 .cta-kanji {
@@ -190,7 +237,7 @@
   font-family: 'Noto Serif JP', serif;
   font-size: clamp(150px, 25vw, 300px);
   font-weight: 200;
-  color: rgba(201,168,76,0.04);
+  color: rgba(201, 168, 76, 0.04);
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -211,7 +258,7 @@
   font-family: 'Jost', sans-serif;
   font-size: 0.85rem;
   font-weight: 300;
-  color: rgba(250,246,238,0.45);
+  color: rgba(250, 246, 238, 0.45);
   margin-bottom: 2.5rem;
   letter-spacing: 0.1em;
   position: relative;
@@ -239,7 +286,10 @@
   transition: background 0.3s, transform 0.2s;
 }
 
-.btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+.btn-primary:hover {
+  background: var(--gold-light);
+  transform: translateY(-2px);
+}
 
 .btn-wa {
   display: inline-flex;
@@ -264,7 +314,21 @@
 }
 
 @media (max-width: 1000px) {
-  .reviews-grid { grid-template-columns: 1fr; max-width: 500px; }
-  .ratings { padding: 5rem 1.5rem 0; }
-  .agg-strip { flex-direction: row; overflow-x: auto; }
+  .reviews-grid {
+    grid-template-columns: 1fr;
+    max-width: 500px;
+  }
+
+  .ratings {
+    padding: 0;
+  }
+
+  .ratings-reviews-bg {
+    padding: 5rem 1.5rem 4rem 1.5rem;
+  }
+
+  .agg-strip {
+    flex-direction: row;
+    overflow-x: auto;
+  }
 }

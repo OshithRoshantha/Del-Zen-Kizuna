@@ -49,31 +49,33 @@ export default function Ratings() {
 
   return (
     <section className="ratings" id="ratings">
-      <div className="ratings-header" ref={ref}>
-        <span className={`section-eyebrow fade-in ${v ? 'visible' : ''}`}>Guest Voices</span>
-        <h2 className={`ratings-title fade-in delay-1 ${v ? 'visible' : ''}`}>
-          What Our<br /><em>Guests Say</em>
-        </h2>
-        <div className={`divider-line center fade-in delay-2 ${v ? 'visible' : ''}`} />
-      </div>
+      <div className="ratings-reviews-bg">
+        <div className="ratings-header" ref={ref}>
+          <span className={`section-eyebrow fade-in ${v ? 'visible' : ''}`}>Guest Voices</span>
+          <h2 className={`ratings-title fade-in delay-1 ${v ? 'visible' : ''}`}>
+            What Our<br /><em>Guests Say</em>
+          </h2>
+          <div className={`divider-line center fade-in delay-2 ${v ? 'visible' : ''}`} />
+        </div>
 
-      {/* Aggregate scores */}
-      <div className={`agg-strip fade-in ${v ? 'visible' : ''}`} style={{ transitionDelay: '0.3s' }}>
-        {aggregates.map(a => (
-          <div key={a.platform} className="agg-item">
-            <span className="agg-platform">{a.platform}</span>
-            <span className="agg-rating">{a.rating}</span>
-            <Stars count={5} />
-            <span className="agg-reviews">{a.reviews} reviews</span>
-          </div>
-        ))}
-      </div>
+        {/* Aggregate scores */}
+        <div className={`agg-strip fade-in ${v ? 'visible' : ''}`} style={{ transitionDelay: '0.3s' }}>
+          {aggregates.map(a => (
+            <div key={a.platform} className="agg-item">
+              <span className="agg-platform">{a.platform}</span>
+              <span className="agg-rating">{a.rating}</span>
+              <Stars count={5} />
+              <span className="agg-reviews">{a.reviews} reviews</span>
+            </div>
+          ))}
+        </div>
 
-      {/* Review cards */}
-      <div className="reviews-grid">
-        {reviews.map((r, i) => (
-          <ReviewCard key={r.name} review={r} delay={i * 0.15} />
-        ))}
+        {/* Review cards */}
+        <div className="reviews-grid">
+          {reviews.map((r, i) => (
+            <ReviewCard key={r.name} review={r} delay={i * 0.15} />
+          ))}
+        </div>
       </div>
 
       {/* Final CTA */}

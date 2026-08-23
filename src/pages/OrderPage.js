@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Footer from '../components/Footer';
 import './OrderPage.css';
 
 const menuData = [
@@ -460,6 +461,9 @@ Please confirm my order and delivery details.`;
           </div>
         </div>
       )}
+
+      {/* ── Footer ── */}
+      <Footer />
     </div>
   );
 }

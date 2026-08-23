@@ -4,7 +4,7 @@
   background: var(--ink);
   color: var(--text-primary);
   font-family: var(--font-body);
-  padding-bottom: 6rem;
+  padding-bottom: 0;
 }
 
 /* ── Header ── */
@@ -150,9 +150,9 @@
 /* ── Cards Grid ── */
 .op-cards-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: 1.5rem;
-  max-width: 1200px;
+  max-width: 1300px;
   margin: 0 auto;
   padding: 0 2rem;
 }
@@ -297,10 +297,10 @@
 .op-details-step, .op-menu-step, .op-review-step {
   max-width: 720px;
   margin: 0 auto;
-  padding: 0 2rem;
+  padding: 0 2rem 5rem;
 }
 
-.op-menu-step { max-width: 1200px; }
+.op-menu-step { max-width: 1300px; }
 .op-review-step { max-width: 1100px; }
 
 .op-form {
@@ -526,6 +526,10 @@
 .op-wa-btn:hover { opacity: 0.88; }
 
 /* ── Responsive ── */
+@media (max-width: 1100px) {
+  .op-cards-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
 @media (max-width: 768px) {
   .op-steps {
     gap: 1rem;
