@@ -66,16 +66,18 @@ export default function Footer() {
 
       <div className="footer-bottom">
         <p>
-          Solutions by <strong>
-            <a 
-              href="https://odlabs.me/" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              style={{ textDecoration: 'none', color: 'inherit' }}
-            >
-              OD Labs
-            </a>
-          </strong>
+          <span style={{ color: '#FFD700' }}>Solutions by </span>{"  "}
+          <a 
+            href="https://odlabs.me/" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            style={{ textDecoration: 'none', color: 'inherit' }}
+          >
+            <strong style={{ fontSize: '1.3em', fontWeight: '900' }}>
+              <span style={{ color: '#ffffff' }}>OD</span>
+              <span style={{ color: '#1A73E8' }}>LABS</span>
+            </strong>
+          </a>
         </p>
         <p className="footer-meaning">
           <em>Del</em> · Delight &nbsp;|&nbsp; <em>Zen</em> · Harmony &nbsp;|&nbsp; <em>絆 Kizuna</em> · Bond
