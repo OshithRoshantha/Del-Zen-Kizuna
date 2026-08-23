@@ -7,16 +7,14 @@
 .menu::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
+  top: 0; left: 0; right: 0;
   height: 1px;
   background: linear-gradient(to right, transparent, rgba(201,168,76,0.4), transparent);
 }
 
 .menu-header {
   text-align: center;
-  max-width: 600px;
+  max-width: 640px;
   margin: 0 auto 3rem;
 }
 
@@ -25,6 +23,7 @@
   font-size: clamp(2.5rem, 5vw, 4rem);
   font-weight: 300;
   color: var(--cream);
+  margin-bottom: 0.5rem;
 }
 
 .menu-sub {
@@ -35,105 +34,202 @@
   line-height: 1.8;
 }
 
-/* Tabs */
+/* ── Tabs ── */
 .menu-tabs {
   display: flex;
   justify-content: center;
-  gap: 0;
-  margin-bottom: 3.5rem;
   border-bottom: 1px solid rgba(201,168,76,0.15);
   max-width: 900px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 4rem;
+  margin: 0 auto 3.5rem;
+  overflow-x: auto;
+  gap: 0;
 }
 
 .menu-tab {
   font-family: 'Jost', sans-serif;
   font-size: 0.65rem;
   font-weight: 400;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: rgba(250,246,238,0.45);
+  color: rgba(250,246,238,0.4);
   padding: 1rem 2rem;
   border: none;
   background: none;
   cursor: pointer;
   position: relative;
   transition: color 0.3s;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
 }
 
 .menu-tab::after {
   content: '';
   position: absolute;
   bottom: -1px;
-  left: 0;
-  right: 0;
+  left: 0; right: 0;
   height: 1px;
   background: var(--gold);
   transform: scaleX(0);
   transition: transform 0.3s;
 }
 
-.menu-tab:hover { color: rgba(250,246,238,0.8); }
-
-.menu-tab.active {
-  color: var(--gold);
-}
-
+.menu-tab:hover { color: rgba(250,246,238,0.75); }
+.menu-tab.active { color: var(--gold); }
 .menu-tab.active::after { transform: scaleX(1); }
 
-/* Grid */
-.menu-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1px;
-  max-width: 1100px;
-  margin: 0 auto;
-  background: rgba(201,168,76,0.08);
-  border: 1px solid rgba(201,168,76,0.08);
+.byob-tab.active {
+  color: #c9a84c;
 }
 
-.menu-card {
-  background: var(--ink);
+.byob-dot { font-size: 0.9rem; }
+
+/* ── BYOB Banner ── */
+.byob-banner {
+  max-width: 1300px;
+  margin: 0 auto 3rem;
+  background: linear-gradient(135deg, rgba(201,168,76,0.1) 0%, rgba(201,168,76,0.04) 100%);
+  border: 1px solid rgba(201,168,76,0.25);
   padding: 2rem 2.5rem;
-  transition: background 0.3s;
 }
 
-.menu-card:hover { background: rgba(201,168,76,0.04); }
+.byob-banner-inner { display: flex; flex-direction: column; gap: 1.5rem; }
+
+.byob-banner-text {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+}
+
+.byob-icon-big { font-size: 2.2rem; flex-shrink: 0; margin-top: 0.2rem; }
+
+.byob-banner-text h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.7rem;
+  font-weight: 400;
+  color: var(--gold);
+  margin-bottom: 0.5rem;
+}
+
+.byob-banner-text p {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 300;
+  color: rgba(250,246,238,0.6);
+  line-height: 1.8;
+}
+
+.byob-perks-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+}
+
+.byob-perk-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  color: rgba(250,246,238,0.7);
+  border: 1px solid rgba(201,168,76,0.25);
+  padding: 0.4rem 0.9rem;
+  background: rgba(201,168,76,0.05);
+}
+
+.perk-check { color: var(--gold); font-weight: 600; }
+
+/* ── Card Grid ── */
+.menu-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+.byob-grid {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+/* ── Individual Card ── */
+.menu-card {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(201,168,76,0.08);
+  overflow: hidden;
+  transition: border-color 0.35s, transform 0.35s, box-shadow 0.35s;
+  cursor: default;
+}
+
+.menu-card:hover {
+  border-color: rgba(201,168,76,0.35);
+  transform: translateY(-6px);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.45);
+}
+
+.menu-card-img {
+  position: relative;
+  aspect-ratio: 4/3;
+  overflow: hidden;
+  background: #111;
+}
+
+.menu-card-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.menu-card:hover .menu-card-img img { transform: scale(1.08); }
+
+.menu-card-img-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 50%, rgba(10,10,10,0.6) 100%);
+}
+
+.menu-badge {
+  position: absolute;
+  top: 0.7rem;
+  right: 0.7rem;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.5rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  background: var(--gold);
+  color: var(--ink);
+  padding: 0.25rem 0.6rem;
+  z-index: 2;
+}
+
+.menu-card-body {
+  padding: 1.2rem 1.4rem 1.4rem;
+}
 
 .menu-card-top {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 0.6rem;
-  gap: 1rem;
+  gap: 0.8rem;
+  margin-bottom: 0.5rem;
 }
 
 .menu-item-name {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 1.25rem;
+  font-size: 1.15rem;
   font-weight: 400;
   color: var(--cream);
-  line-height: 1.2;
-  margin-bottom: 0.25rem;
-}
-
-.menu-badge {
-  font-family: 'Jost', sans-serif;
-  font-size: 0.5rem;
-  font-weight: 500;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--ink);
-  background: var(--gold);
-  padding: 0.2rem 0.6rem;
-  display: inline-block;
+  line-height: 1.25;
 }
 
 .menu-price {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 1.2rem;
+  font-size: 1.05rem;
   font-weight: 300;
   color: var(--gold);
   white-space: nowrap;
@@ -142,29 +238,63 @@
 
 .menu-item-desc {
   font-family: 'Jost', sans-serif;
-  font-size: 0.78rem;
+  font-size: 0.74rem;
   font-weight: 300;
   color: rgba(250,246,238,0.45);
   line-height: 1.7;
 }
 
+/* ── Footer note ── */
 .menu-footer-note {
   text-align: center;
-  margin-top: 3rem;
+  margin-top: 3.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
 }
 
 .menu-footer-note p {
   font-family: 'Jost', sans-serif;
   font-size: 0.72rem;
-  font-weight: 300;
   color: rgba(250,246,238,0.3);
   line-height: 1.8;
 }
 
-@media (max-width: 768px) {
+.btn-wa {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: #25D366;
+  color: white;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 0.9rem 2rem;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.btn-wa:hover { background: #128C7E; transform: translateY(-2px); }
+
+/* ── Responsive ── */
+@media (max-width: 1200px) {
+  .menu-cards-grid { grid-template-columns: repeat(3, 1fr); }
+  .byob-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 900px) {
   .menu { padding: 5rem 1.5rem; }
-  .menu-grid { grid-template-columns: 1fr; }
-  .menu-tabs { overflow-x: auto; justify-content: flex-start; padding-bottom: 0; }
-  .menu-tab { padding: 0.8rem 1.2rem; white-space: nowrap; }
-  .menu-card { padding: 1.5rem; }
+  .menu-cards-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+  .byob-grid { grid-template-columns: repeat(2, 1fr); }
+  .byob-banner-text { flex-direction: column; gap: 0.8rem; }
+}
+
+@media (max-width: 540px) {
+  .menu-cards-grid,
+  .byob-grid { grid-template-columns: 1fr; }
+  .menu-tab { padding: 0.8rem 1.2rem; font-size: 0.6rem; }
 }

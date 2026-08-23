@@ -15,19 +15,18 @@ export default function About() {
           <div className={`about-img-frame ${v1 ? 'visible' : ''}`}>
             <div className="about-img-main">
               <img
-                src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&q=80"
-                alt="Del Zen Kizuna dining"
+                src="/images/meals/restaurant/dragon-prawn-fried-rice.jpg"
+                alt="Del Zen Kizuna signature dish"
               />
             </div>
             <div className="about-img-accent">
               <img
-                src="https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=400&q=80"
-                alt="Artisan cuisine"
+                src="/images/meals/desserts/dragon-chocolate-lava-cake.jpg"
+                alt="Artisan dessert"
               />
             </div>
             <div className="about-img-badge">
-              <span className="badge-kanji">絆</span>
-              <span className="badge-text">Est. 2024</span>
+              <img src="/images/logo.png" alt="Del Zen Kizuna" className="badge-logo" />
             </div>
           </div>
         </div>
@@ -61,8 +60,8 @@ export default function About() {
             </p>
 
             <div className="about-values">
-              {['Excellence', 'Authenticity', 'Innovation', 'Sustainability'].map((v, i) => (
-                <div key={v} className="value-chip" style={{ transitionDelay: `${0.1 * i}s` }}>
+              {['Excellence', 'Authenticity', 'Innovation', 'Sustainability'].map((v) => (
+                <div key={v} className="value-chip">
                   <span className="value-dot" />
                   {v}
                 </div>
@@ -82,7 +81,7 @@ export default function About() {
               <div className="stat-sep" />
               <div className="stat">
                 <span className="stat-num">100%</span>
-                <span className="stat-label">Locally Sourced</span>
+                <span className="stat-label">Local Ingredients</span>
               </div>
             </div>
           </div>

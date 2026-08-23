@@ -4,7 +4,6 @@ import Hero from './sections/Hero';
 import About from './sections/About';
 import Directors from './sections/Directors';
 import Menu from './sections/Menu';
-import BYOB from './sections/BYOB';
 import Reservations from './sections/Reservations';
 import OrderOnline from './sections/OrderOnline';
 import Ratings from './sections/Ratings';
@@ -19,7 +18,6 @@ export default function App() {
         <About />
         <Directors />
         <Menu />
-        <BYOB />
         <Reservations />
         <OrderOnline />
         <Ratings />

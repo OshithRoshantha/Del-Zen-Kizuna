@@ -1,81 +1,94 @@
 import React, { useEffect, useState } from 'react';
 import './Hero.css';
 
+const INFO = [
+  { icon: '🕐', label: 'Open Daily', value: '11 AM – 11 PM' },
+  { icon: '📍', label: 'Location', value: 'Colombo, Sri Lanka' },
+  { icon: '📞', label: 'Reservations', value: '+94 77 123 4567' },
+  { icon: '🍷', label: 'BYOB', value: 'No Corkage Fee' },
+];
+
 export default function Hero() {
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    const t = setTimeout(() => setLoaded(true), 100);
+    const t = setTimeout(() => setLoaded(true), 80);
     return () => clearTimeout(t);
   }, []);
 
-  const scrollTo = (id) => {
-    document.querySelector(id)?.scrollIntoView({ behavior: 'smooth' });
-  };
+  const scrollTo = (id) => document.querySelector(id)?.scrollIntoView({ behavior: 'smooth' });
 
   return (
     <section className="hero" id="hero">
-      {/* Layered background */}
+
+      {/* Full-bleed background: layered food image + dark overlay */}
       <div className="hero-bg">
-        <div className="hero-bg-overlay" />
-        <div className="hero-bg-pattern" />
-        <div className="hero-bg-vignette" />
+        <div
+          className="hero-bg-img"
+          style={{ backgroundImage: "url('/images/meals/restaurant/dragon-prawn-fried-rice.jpg')" }}
+        />
+        <div className="hero-bg-gradient" />
+        <div className="hero-bg-noise" />
       </div>
 
-      {/* Animated kanji watermark */}
-      <div className={`hero-kanji ${loaded ? 'visible' : ''}`}>絆</div>
+      {/* Giant decorative kanji — right side */}
+      <div className={`hero-kanji ${loaded ? 'in' : ''}`} aria-hidden="true">絆</div>
 
-      <div className="hero-content">
-        <div className={`hero-eyebrow ${loaded ? 'visible' : ''}`}>
-          Sri Lankan & Asian Fusion
+      {/* ── Main content ── */}
+      <div className="hero-body">
+
+        {/* Left column */}
+        <div className="hero-left">
+          <div className={`hero-eyebrow ${loaded ? 'in' : ''}`}>
+            <span className="eyebrow-line" />
+            <span>Sri Lanka's Premier Asian Fusion Dining</span>
+            <span className="eyebrow-line" />
+          </div>
+
+          <h1 className={`hero-title ${loaded ? 'in' : ''}`}>
+            <span className="ht-del">Del</span>
+            <span className="ht-zen">Zen</span>
+            <span className="ht-kizuna">Kizuna</span>
+          </h1>
+
+          <p className={`hero-tagline ${loaded ? 'in' : ''}`}>
+            Where bonds are forged<br />through flavour
+          </p>
         </div>
 
-        <h1 className={`hero-title ${loaded ? 'visible' : ''}`}>
-          <span className="title-line1">Del Zen</span>
-          <span className="title-line2">Kizuna</span>
-        </h1>
-
-        <p className={`hero-tagline ${loaded ? 'visible' : ''}`}>
-          Where bonds are forged through flavour
-        </p>
-
-        <div className={`hero-actions ${loaded ? 'visible' : ''}`}>
-          <button className="btn-primary" onClick={() => scrollTo('#reservations')}>
-            Reserve Your Table
-          </button>
-          <button className="btn-ghost" onClick={() => scrollTo('#menu')}>
-            Explore the Menu
-          </button>
+        {/* Right column — logo centrepiece */}
+        <div className="hero-right">
+          <div className={`hero-logo-frame ${loaded ? 'in' : ''}`}>
+            <div className="logo-ring logo-ring-outer" />
+            <div className="logo-ring logo-ring-inner" />
+            <img src="/images/logo.png" alt="Del Zen Kizuna" className="hero-logo-img" />
+          </div>
         </div>
+
       </div>
 
-      <div className="hero-scroll-hint">
-        <div className="scroll-line" />
-        <span>Scroll</span>
+      {/* Scroll indicator */}
+      <div className="hero-scroll">
+        <div className="scroll-track"><div className="scroll-thumb" /></div>
+        <span>Scroll to explore</span>
       </div>
 
-      {/* Bottom info strip */}
-      <div className="hero-strip">
-        <div className="strip-item">
-          <span className="strip-label">Open Daily</span>
-          <span className="strip-value">11:00 AM – 11:00 PM</span>
-        </div>
-        <div className="strip-divider" />
-        <div className="strip-item">
-          <span className="strip-label">Location</span>
-          <span className="strip-value">Colombo, Sri Lanka</span>
-        </div>
-        <div className="strip-divider" />
-        <div className="strip-item">
-          <span className="strip-label">Reservations</span>
-          <span className="strip-value">+94 77 123 4567</span>
-        </div>
-        <div className="strip-divider" />
-        <div className="strip-item">
-          <span className="strip-label">Concept</span>
-          <span className="strip-value">BYOB Available</span>
-        </div>
+      {/* ── Bottom info bar ── */}
+      <div className="hero-infobar">
+        {INFO.map((item, i) => (
+          <React.Fragment key={item.label}>
+            {i > 0 && <div className="infobar-sep" />}
+            <div className="infobar-item">
+              <span className="infobar-icon">{item.icon}</span>
+              <div className="infobar-text">
+                <span className="infobar-label">{item.label}</span>
+                <span className="infobar-value">{item.value}</span>
+              </div>
+            </div>
+          </React.Fragment>
+        ))}
       </div>
+
     </section>
   );
 }

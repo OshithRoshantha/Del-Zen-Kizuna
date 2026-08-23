@@ -2,7 +2,7 @@
 
 :root {
   --ink: #0a0a0a;
-  --ink-mid: #1a1a1a;
+  --ink-mid: #141414;
   --gold: #c9a84c;
   --gold-light: #e8c97a;
   --gold-pale: #f5e9c8;
@@ -12,13 +12,19 @@
   --font-display: 'Cormorant Garamond', serif;
   --font-jp: 'Noto Serif JP', serif;
   --font-body: 'Jost', sans-serif;
+
+  /* ── Readability tokens — raised from original ── */
+  --text-primary:   rgba(250,246,238,0.97);   /* was ~0.75–0.85 */
+  --text-secondary: rgba(250,246,238,0.78);   /* was ~0.55 */
+  --text-muted:     rgba(250,246,238,0.55);   /* was ~0.35–0.45 */
+  --text-faint:     rgba(250,246,238,0.38);   /* was ~0.25–0.3 */
 }
 
 html { scroll-behavior: smooth; font-size: 16px; }
 
 body {
   background: var(--ink);
-  color: var(--cream);
+  color: var(--text-primary);
   font-family: var(--font-body);
   font-weight: 300;
   line-height: 1.7;
@@ -27,30 +33,28 @@ body {
 }
 
 ::selection { background: var(--gold); color: var(--ink); }
-
 a { color: inherit; text-decoration: none; }
-
 img { display: block; max-width: 100%; }
-
 button { cursor: pointer; border: none; background: none; font-family: var(--font-body); }
 
-/* Scrollbar */
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: var(--ink); }
 ::-webkit-scrollbar-thumb { background: var(--gold); }
 
-/* Utility */
+/* ── Utilities ── */
 .gold { color: var(--gold); }
+
 .section-eyebrow {
   font-family: var(--font-body);
-  font-weight: 400;
-  font-size: 0.65rem;
-  letter-spacing: 0.35em;
+  font-weight: 500;
+  font-size: 0.67rem;
+  letter-spacing: 0.38em;
   text-transform: uppercase;
   color: var(--gold);
   display: block;
   margin-bottom: 1.2rem;
 }
+
 .divider-line {
   width: 60px;
   height: 1px;
@@ -59,21 +63,76 @@ button { cursor: pointer; border: none; background: none; font-family: var(--fon
 }
 .divider-line.center { margin: 1.5rem auto; }
 
-/* Fade-in animation */
+/* ── Fade-in animations ── */
 .fade-in {
   opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.9s ease, transform 0.9s ease;
+  transform: translateY(28px);
+  transition: opacity 0.85s ease, transform 0.85s ease;
 }
-.fade-in.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-.fade-in.delay-1 { transition-delay: 0.15s; }
-.fade-in.delay-2 { transition-delay: 0.3s; }
-.fade-in.delay-3 { transition-delay: 0.45s; }
-.fade-in.delay-4 { transition-delay: 0.6s; }
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+.fade-in.delay-1 { transition-delay: 0.12s; }
+.fade-in.delay-2 { transition-delay: 0.24s; }
+.fade-in.delay-3 { transition-delay: 0.36s; }
+.fade-in.delay-4 { transition-delay: 0.48s; }
 
 @media (prefers-reduced-motion: reduce) {
   .fade-in { transition: none; opacity: 1; transform: none; }
+}
+
+/* ── Global text brightness overrides ──
+   Targets the most common "muted" patterns used across sections */
+
+/* Secondary body text */
+.about-body,
+.byob-desc,
+.director-desc,
+.menu-item-desc,
+.res-desc,
+.order-desc,
+.directors-sub,
+.menu-sub,
+.review-text {
+  color: var(--text-secondary) !important;
+}
+
+/* Faint / caption text */
+.agg-reviews,
+.footer-tagline,
+.menu-footer-note p,
+.byob-note span,
+.strip-value,
+.infobar-value {
+  color: var(--text-muted) !important;
+}
+
+/* Strip / info labels keep their gold */
+.strip-label,
+.infobar-label,
+.section-eyebrow {
+  color: var(--gold) !important;
+}
+
+/* Nav links */
+.nav-link {
+  color: rgba(250,246,238,0.88) !important;
+}
+
+/* Value chips */
+.value-chip {
+  color: rgba(250,246,238,0.78) !important;
+}
+
+/* Footer col text */
+.footer-col ul li button,
+.footer-col ul li span {
+  color: rgba(250,246,238,0.62) !important;
+}
+
+.footer-bottom p {
+  color: rgba(250,246,238,0.42) !important;
+}
+
+/* Form labels */
+.form-group label {
+  color: rgba(250,246,238,0.72) !important;
 }

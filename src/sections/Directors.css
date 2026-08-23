@@ -8,16 +8,14 @@
 .directors::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
+  top: 0; left: 0; right: 0;
   height: 1px;
   background: linear-gradient(to right, transparent, rgba(201,168,76,0.4), transparent);
 }
 
 .directors-header {
   text-align: center;
-  max-width: 600px;
+  max-width: 620px;
   margin: 0 auto 5rem;
 }
 
@@ -27,22 +25,20 @@
   font-weight: 300;
   line-height: 1.1;
   color: var(--cream);
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 
-.directors-title em {
-  font-style: italic;
-  color: var(--gold);
-}
+.directors-title em { font-style: italic; color: var(--gold); }
 
 .directors-sub {
   font-family: 'Jost', sans-serif;
   font-size: 0.85rem;
   font-weight: 300;
   color: rgba(250,246,238,0.5);
-  line-height: 1.8;
+  line-height: 1.85;
 }
 
+/* Grid */
 .directors-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -53,66 +49,74 @@
 
 /* Card */
 .director-card {
-  background: rgba(255,255,255,0.03);
+  background: rgba(255,255,255,0.025);
   border: 1px solid rgba(201,168,76,0.1);
-  transition: border-color 0.4s, transform 0.4s;
+  transition: border-color 0.4s, transform 0.4s, box-shadow 0.4s;
+  overflow: hidden;
 }
 
 .director-card:hover {
-  border-color: rgba(201,168,76,0.35);
-  transform: translateY(-6px);
+  border-color: rgba(201,168,76,0.4);
+  transform: translateY(-8px);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(201,168,76,0.15);
 }
 
+/* Image */
 .director-img-wrap {
   position: relative;
   aspect-ratio: 3/4;
   overflow: hidden;
+  background: #111;
 }
 
 .director-img-wrap img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: top;
+  object-position: top center;
   transition: transform 0.7s ease;
+  /* Handle transparent PNG backgrounds */
+  background: linear-gradient(135deg, #1a1612 0%, #0d0b09 100%);
 }
 
-.director-card:hover .director-img-wrap img { transform: scale(1.06); }
+.director-card:hover .director-img-wrap img { transform: scale(1.05); }
 
 .director-img-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, transparent 50%, rgba(10,10,10,0.9) 100%);
+  background: linear-gradient(to bottom, transparent 40%, rgba(10,10,10,0.95) 100%);
 }
 
-.director-quote {
+.director-quote-hover {
   position: absolute;
   bottom: 1.5rem;
   left: 1.5rem;
   right: 1.5rem;
   font-family: 'Cormorant Garamond', serif;
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-style: italic;
   font-weight: 300;
   color: var(--gold-light);
-  line-height: 1.5;
+  line-height: 1.55;
   opacity: 0;
-  transform: translateY(10px);
+  transform: translateY(12px);
   transition: opacity 0.4s, transform 0.4s;
+  z-index: 2;
 }
 
-.director-card:hover .director-quote {
+.director-card:hover .director-quote-hover {
   opacity: 1;
   transform: translateY(0);
 }
 
+/* Info */
 .director-info {
   padding: 2rem;
 }
 
 .director-name {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 1.6rem;
+  font-size: 1.55rem;
   font-weight: 400;
   color: var(--cream);
   margin-bottom: 0.3rem;
@@ -120,22 +124,24 @@
 
 .director-title-tag {
   font-family: 'Jost', sans-serif;
-  font-size: 0.6rem;
-  font-weight: 400;
-  letter-spacing: 0.2em;
+  font-size: 0.58rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--gold);
 }
 
 .director-desc {
   font-family: 'Jost', sans-serif;
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   font-weight: 300;
   color: rgba(250,246,238,0.55);
-  line-height: 1.85;
+  line-height: 1.9;
 }
 
 @media (max-width: 1000px) {
-  .directors-grid { grid-template-columns: 1fr; max-width: 480px; }
   .directors { padding: 5rem 1.5rem; }
+  .directors-grid { grid-template-columns: 1fr; max-width: 420px; }
+  .director-img-wrap { aspect-ratio: 4/3; }
+  .director-img-wrap img { object-position: center top; }
 }

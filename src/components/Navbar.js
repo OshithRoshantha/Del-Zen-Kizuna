@@ -4,8 +4,6 @@ import './Navbar.css';
 const links = [
   { label: 'About', href: '#about' },
   { label: 'Menu', href: '#menu' },
-  { label: 'BYOB', href: '#byob' },
-  { label: 'Reservations', href: '#reservations' },
   { label: 'Order Online', href: '#order' },
 ];
 
@@ -28,10 +26,8 @@ export default function Navbar() {
   return (
     <header className={`navbar ${scrolled ? 'scrolled' : ''}`}>
       <div className="navbar-inner">
-        <a href="#hero" className="navbar-logo" onClick={() => handleNav('#hero')}>
-          <span className="logo-del">Del</span>
-          <span className="logo-zen">Zen</span>
-          <span className="logo-kizuna">絆 Kizuna</span>
+        <a href="#hero" className="navbar-logo" onClick={(e) => { e.preventDefault(); handleNav('#hero'); }}>
+          <img src="/images/logo.png" alt="Del Zen Kizuna" className="logo-img" />
         </a>
 
         <nav className={`navbar-links ${open ? 'open' : ''}`}>
@@ -45,7 +41,7 @@ export default function Navbar() {
           </button>
         </nav>
 
-        <button className={`hamburger ${open ? 'active' : ''}`} onClick={() => setOpen(!open)} aria-label="Menu">
+        <button className={`hamburger ${open ? 'active' : ''}`} onClick={() => setOpen(!open)} aria-label="Toggle menu">
           <span /><span /><span />
         </button>
       </div>

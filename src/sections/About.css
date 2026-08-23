@@ -79,37 +79,7 @@
   object-fit: cover;
 }
 
-.about-img-badge {
-  position: absolute;
-  top: 1.5rem;
-  right: -1.5rem;
-  width: 80px;
-  height: 80px;
-  background: var(--gold);
-  border-radius: 50%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  z-index: 3;
-}
 
-.badge-kanji {
-  font-family: 'Noto Serif JP', serif;
-  font-size: 1.5rem;
-  font-weight: 300;
-  color: var(--ink);
-  line-height: 1;
-}
-
-.badge-text {
-  font-family: 'Jost', sans-serif;
-  font-size: 0.45rem;
-  font-weight: 500;
-  letter-spacing: 0.15em;
-  color: var(--ink);
-  text-transform: uppercase;
-}
 
 /* Text column */
 .about-heading {
@@ -256,4 +226,29 @@
   .about-img-accent { bottom: -1.5rem; right: -1rem; }
   .name-meaning { flex-direction: column; gap: 1.5rem; padding: 2rem 1.5rem; }
   .meaning-sep { display: none; }
+}
+
+/* Badge logo override */
+.about-img-badge {
+  position: absolute;
+  top: 1.5rem;
+  right: -1.5rem;
+  width: 90px;
+  height: 90px;
+  background: var(--ink);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+  border: 2px solid rgba(201,168,76,0.3);
+  box-shadow: 0 0 0 6px var(--ink);
+  padding: 8px;
+}
+
+.badge-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 50%;
 }

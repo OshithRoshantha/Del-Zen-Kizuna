@@ -9,24 +9,16 @@ export default function Footer() {
       <div className="footer-top">
         <div className="footer-brand">
           <div className="footer-logo">
-            <span className="fl-del">Del</span>
-            <span className="fl-zen">Zen</span>
-            <span className="fl-kizuna">絆 Kizuna</span>
+            <img src="/images/logo.png" alt="Del Zen Kizuna" className="footer-logo-img" />
           </div>
           <p className="footer-tagline">
             Where bonds are forged through flavour.<br />
             Sri Lankan & Asian Fusion Cuisine — Colombo, Sri Lanka.
           </p>
           <div className="footer-socials">
-            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="social-link">
-              <span>Instagram</span>
-            </a>
-            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="social-link">
-              <span>Facebook</span>
-            </a>
-            <a href="https://wa.me/94771234567" target="_blank" rel="noopener noreferrer" className="social-link">
-              <span>WhatsApp</span>
-            </a>
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="social-link">Instagram</a>
+            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="social-link">Facebook</a>
+            <a href="https://wa.me/94771234567" target="_blank" rel="noopener noreferrer" className="social-link">WhatsApp</a>
           </div>
         </div>
 
@@ -34,7 +26,7 @@ export default function Footer() {
           <div className="footer-col">
             <h4>Navigate</h4>
             <ul>
-              {[['About', '#about'],['Directors', '#directors'],['Menu', '#menu'],['BYOB', '#byob'],['Reservations', '#reservations'],['Order Online', '#order']].map(([l,h]) => (
+              {[['About', '#about'],['Directors', '#directors'],['Menu', '#menu'],['Reservations', '#reservations'],['Order Online', '#order']].map(([l,h]) => (
                 <li key={l}><button onClick={() => scrollTo(h)}>{l}</button></li>
               ))}
             </ul>

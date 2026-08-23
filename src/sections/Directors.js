@@ -4,28 +4,28 @@ import './Directors.css';
 
 const directors = [
   {
-    name: 'Arjun Perera',
-    title: 'Founder & Executive Director',
+    name: 'Janaka Dharmaekeerthi',
+    title: 'Chairman & Managing Director',
     description:
-      'With over 20 years in the Sri Lankan hospitality industry, Arjun envisioned Del Zen Kizuna as a place where his homeland\'s culinary treasures could be celebrated on a world stage. His passion for authentic flavour and his belief in the power of a shared meal drives every decision made at the restaurant.',
-    img: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=600&q=80',
-    quote: '"Food is the bridge between cultures."',
+      'With decades of leadership in business and entrepreneurship across Sri Lanka, Janaka brings visionary guidance and unwavering commitment to excellence. His deep understanding of the local market and passion for elevating Sri Lankan hospitality are the foundations upon which Del Zen Kizuna is built.',
+    img: '/images/directors/director-janaka.png',
+    quote: '"Excellence is not an act — it is a habit cultivated every single day."',
   },
   {
-    name: 'Mei Lin Tanaka',
-    title: 'Executive Chef & Creative Director',
+    name: 'Delsha Dabarera',
+    title: 'Director & Co-Founder',
     description:
-      'Trained in Tokyo and refined in Singapore, Mei Lin brings a precise, artistic sensibility to the kitchen. She curates each dish as a narrative — honouring the spice traditions of Sri Lanka while weaving in contemporary Japanese and South-East Asian techniques that elevate every plate.',
-    img: 'https://images.unsplash.com/photo-1583394293214-0b8e2c54db12?w=600&q=80',
-    quote: '"Each dish tells the story of two worlds."',
+      'Delsha is the creative force and operational heart of Del Zen Kizuna. With a sharp eye for detail and a natural gift for hospitality, he oversees the guest experience from concept to execution — ensuring that every visit is not just a meal, but a lasting memory worth sharing.',
+    img: '/images/directors/director-delsha.jpg',
+    quote: '"Every guest deserves to feel like the most important person in the room."',
   },
   {
-    name: 'Dilshan Fernando',
-    title: 'Director of Hospitality & Operations',
+    name: 'Lady Director',
+    title: 'Director — Culture & Community',
     description:
-      'A veteran of five-star hospitality across Asia, Dilshan ensures that every guest\'s experience is flawless — from the first greeting to the last farewell. His philosophy is simple: genuine warmth, impeccable attention, and a commitment to making every visit feel like a celebration.',
-    img: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=600&q=80',
-    quote: '"Hospitality is the art of making people feel at home."',
+      'A passionate advocate for Sri Lankan culinary heritage and community connection, she brings warmth, cultural depth, and an authentic spirit to everything Del Zen Kizuna represents. Her guidance ensures that the restaurant remains deeply rooted in the values and traditions of Sri Lanka while embracing the world.',
+    img: '/images/directors/director-lady.png',
+    quote: '"Our food carries the soul of our people — that is something we must always protect."',
   },
 ];
 
@@ -35,13 +35,14 @@ export default function Directors() {
   return (
     <section className="directors" id="directors">
       <div className="directors-header" ref={ref}>
-        <span className={`section-eyebrow ${v ? 'visible' : ''}`} style={{ opacity: v ? 1 : 0, transition: 'opacity 0.8s' }}>The Visionaries</span>
-        <h2 className={`directors-title fade-in ${v ? 'visible' : ''}`}>
+        <span className={`section-eyebrow fade-in ${v ? 'visible' : ''}`}>The Visionaries</span>
+        <h2 className={`directors-title fade-in delay-1 ${v ? 'visible' : ''}`}>
           Minds Behind<br /><em>the Bond</em>
         </h2>
-        <div className="divider-line center" />
-        <p className={`directors-sub fade-in delay-1 ${v ? 'visible' : ''}`}>
-          Three individuals, one shared dream — to unite cultures through the universal language of extraordinary food.
+        <div className={`divider-line center fade-in delay-2 ${v ? 'visible' : ''}`} />
+        <p className={`directors-sub fade-in delay-2 ${v ? 'visible' : ''}`}>
+          Three individuals united by one shared dream — to celebrate Sri Lankan heritage
+          and Asian artistry through the universal language of extraordinary food.
         </p>
       </div>
 
@@ -55,7 +56,7 @@ export default function Directors() {
 }
 
 function DirectorCard({ director, delay }) {
-  const [ref, v] = useFadeIn(0.15);
+  const [ref, v] = useFadeIn(0.12);
 
   return (
     <div
@@ -66,7 +67,7 @@ function DirectorCard({ director, delay }) {
       <div className="director-img-wrap">
         <img src={director.img} alt={director.name} />
         <div className="director-img-overlay" />
-        <div className="director-quote">{director.quote}</div>
+        <div className="director-quote-hover">{director.quote}</div>
       </div>
       <div className="director-info">
         <h3 className="director-name">{director.name}</h3>
