@@ -7,22 +7,20 @@ const SEGMENTS = [
 ];
 
 export default function Hero() {
-  const videoRef   = useRef(null);
-  const segRef     = useRef(0);
+  const videoRef = useRef(null);
+  const segRef   = useRef(0);
 
-  // logoVisible: logo shown (pre-load)
-  // videoReady:  video has loaded & started — triggers content-in + logo-out
-  const [logoVisible,  setLogoVisible]  = useState(false);
-  const [videoReady,   setVideoReady]   = useState(false);
-  const [contentIn,    setContentIn]    = useState(false);
+  const [logoVisible, setLogoVisible] = useState(false);
+  const [videoReady,  setVideoReady]  = useState(false);
+  const [contentIn,   setContentIn]   = useState(false);
 
-  /* Logo fades in quickly so there's something on the black screen */
+  /* Logo fades in fast so there's something on the black screen */
   useEffect(() => {
     const t = setTimeout(() => setLogoVisible(true), 120);
     return () => clearTimeout(t);
   }, []);
 
-  /* Video segment logic */
+  /* Video segment logic + autoplay trigger */
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
@@ -30,7 +28,8 @@ export default function Hero() {
     const playSegment = (index) => {
       const seg = SEGMENTS[index % SEGMENTS.length];
       video.currentTime = seg.start;
-      video.play().catch(() => {});
+      // Return the promise so callers can chain
+      return video.play();
     };
 
     const handleTimeUpdate = () => {
@@ -45,38 +44,44 @@ export default function Hero() {
 
     let hasTriggered = false;
 
-    const handleLoaded = () => {
+    const onReady = () => {
       if (hasTriggered) return;
       hasTriggered = true;
-      segRef.current = 0;
-      playSegment(0);
 
-      // After a tiny buffer so first frame is actually painted:
-      setTimeout(() => {
-        setVideoReady(true);   // triggers logo fade-out
-        // Stagger the content entrance slightly after logo starts leaving
-        setTimeout(() => setContentIn(true), 350);
-      }, 200);
+      playSegment(0)
+        .then(() => {
+          // Play succeeded — video is actually rendering
+          setVideoReady(true);
+          setTimeout(() => setContentIn(true), 350);
+        })
+        .catch(() => {
+          // Autoplay blocked — still show content after delay
+          setVideoReady(true);
+          setTimeout(() => setContentIn(true), 350);
+        });
     };
 
-    video.addEventListener('loadedmetadata', handleLoaded);
-    video.addEventListener('canplay',          handleLoaded);
-    video.addEventListener('playing',          handleLoaded);
-    video.addEventListener('timeupdate',       handleTimeUpdate);
+    video.addEventListener('loadedmetadata', onReady);
+    video.addEventListener('canplay',        onReady);
+    video.addEventListener('timeupdate',     handleTimeUpdate);
 
-    if (video.readyState >= 1) handleLoaded();
+    // If video is already loaded (cached)
+    if (video.readyState >= 2) onReady();
 
-    // Safety fallback: ensure logo disappears even if video is slow or autoplay restricted
-    const fallbackTimer = setTimeout(() => {
-      handleLoaded();
-    }, 4000);
+    // Hard fallback: show content after 5s even if video never loads
+    const fallback = setTimeout(() => {
+      if (!hasTriggered) {
+        hasTriggered = true;
+        setVideoReady(true);
+        setTimeout(() => setContentIn(true), 350);
+      }
+    }, 5000);
 
     return () => {
-      clearTimeout(fallbackTimer);
-      video.removeEventListener('loadedmetadata', handleLoaded);
-      video.removeEventListener('canplay',          handleLoaded);
-      video.removeEventListener('playing',          handleLoaded);
-      video.removeEventListener('timeupdate',       handleTimeUpdate);
+      clearTimeout(fallback);
+      video.removeEventListener('loadedmetadata', onReady);
+      video.removeEventListener('canplay',        onReady);
+      video.removeEventListener('timeupdate',     handleTimeUpdate);
     };
   }, []);
 
@@ -85,9 +90,14 @@ export default function Hero() {
 
       {/* ── Video background ── */}
       <div className="hero-video-bg">
+        {/*
+          autoPlay + muted + playsInline are ALL required for browser autoplay policies.
+          React needs the camelCase autoPlay prop — the HTML attribute alone is ignored.
+        */}
         <video
           ref={videoRef}
           className="hero-video"
+          autoPlay
           muted
           playsInline
           preload="auto"

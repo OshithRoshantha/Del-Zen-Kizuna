@@ -3,8 +3,9 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import './Navbar.css';
 
 const links = [
+  { label: 'Home',  href: '#hero' },
   { label: 'About', href: '#about' },
-  { label: 'Menu', href: '#menu' },
+  { label: 'Menu',  href: '#menu' },
 ];
 
 export default function Navbar() {

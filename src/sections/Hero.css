@@ -35,7 +35,7 @@
 }
 
 /* ══════════════════════════════════════
-   PRE-LOAD  —  centred logo with animated rings
+   PRE-LOAD  —  centred logo
    Stays visible until video ready, then exits gracefully.
 ══════════════════════════════════════ */
 .hero-preload {
@@ -47,29 +47,28 @@
   justify-content: center;
   background: #000;
 
-  /* Start invisible */
   opacity: 0;
-  pointer-events: none;
   visibility: hidden;
+  pointer-events: none;
   transition: opacity 0.8s ease, visibility 0.8s ease;
 }
 
-/* Step 1: logo fades in (page load) */
 .hero-preload.visible {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
 }
 
-/* Step 2: logo fades out + scales up gently (video ready) */
+/* Scale-up + fade-out on video ready */
 .hero-preload.exit {
   opacity: 0;
-  pointer-events: none;
   visibility: hidden;
+  pointer-events: none;
   transform: scale(1.14);
-  transition: opacity 0.85s cubic-bezier(0.4, 0, 0.2, 1),
-              transform 0.85s cubic-bezier(0.4, 0, 0.2, 1),
-              visibility 0.85s ease;
+  transition:
+    opacity    0.85s cubic-bezier(0.4, 0, 0.2, 1),
+    transform  0.85s cubic-bezier(0.4, 0, 0.2, 1),
+    visibility 0.85s ease;
 }
 
 .hero-logo-frame {
@@ -81,7 +80,7 @@
   height: clamp(220px, 30vw, 380px);
 }
 
-/* ── Radiating Pulse Waves around circles ── */
+/* Radiating pulse waves */
 .logo-pulse-ring {
   position: absolute;
   inset: -12px;
@@ -92,37 +91,27 @@
   pointer-events: none;
 }
 
-.logo-pulse-ring-delayed {
-  animation-delay: 1.4s;
-}
+.logo-pulse-ring-delayed { animation-delay: 1.4s; }
 
 @keyframes ripplePulse {
-  0% {
-    transform: scale(0.82);
-    opacity: 0.85;
-  }
-  100% {
-    transform: scale(1.32);
-    opacity: 0;
-  }
+  0%   { transform: scale(0.82); opacity: 0.85; }
+  100% { transform: scale(1.32); opacity: 0; }
 }
 
-/* ── Rotating & Glowing Rings ── */
+/* Rotating rings */
 .logo-ring {
   position: absolute;
   border-radius: 50%;
   pointer-events: none;
 }
 
-/* Outer dashed spinning golden ring */
 .logo-ring-outer {
   inset: -8px;
   border: 1px dashed rgba(201, 168, 76, 0.45);
   box-shadow: 0 0 15px rgba(201, 168, 76, 0.25);
-  animation: rotateRingClockwise 18s linear infinite;
+  animation: rotateRingCW 18s linear infinite;
 }
 
-/* Middle glowing orbit ring */
 .logo-ring-mid {
   inset: 5%;
   border: 1.5px solid transparent;
@@ -131,35 +120,21 @@
   border-bottom-color: #f3d884;
   border-left-color: rgba(201, 168, 76, 0.3);
   box-shadow: 0 0 25px rgba(201, 168, 76, 0.4);
-  animation: rotateRingCounter 12s linear infinite;
+  animation: rotateRingCCW 12s linear infinite;
 }
 
-/* Inner breathing ring */
 .logo-ring-inner {
   inset: 14%;
   border: 1px solid rgba(201, 168, 76, 0.25);
   animation: innerGlowPulse 3s ease-in-out infinite alternate;
 }
 
-@keyframes rotateRingClockwise {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
-}
-
-@keyframes rotateRingCounter {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(-360deg); }
-}
+@keyframes rotateRingCW  { from { transform: rotate(0deg); }    to { transform: rotate(360deg); } }
+@keyframes rotateRingCCW { from { transform: rotate(0deg); }    to { transform: rotate(-360deg); } }
 
 @keyframes innerGlowPulse {
-  0% {
-    box-shadow: 0 0 10px rgba(201, 168, 76, 0.2);
-    border-color: rgba(201, 168, 76, 0.25);
-  }
-  100% {
-    box-shadow: 0 0 35px rgba(201, 168, 76, 0.65);
-    border-color: rgba(201, 168, 76, 0.75);
-  }
+  0%   { box-shadow: 0 0 10px rgba(201, 168, 76, 0.2);  border-color: rgba(201, 168, 76, 0.25); }
+  100% { box-shadow: 0 0 35px rgba(201, 168, 76, 0.65); border-color: rgba(201, 168, 76, 0.75); }
 }
 
 .hero-logo-img {
@@ -175,12 +150,13 @@
 }
 
 @keyframes logoFloat {
-  0% { transform: scale(1); }
+  0%   { transform: scale(1); }
   100% { transform: scale(1.03); }
 }
 
 /* ══════════════════════════════════════
    POST-LOAD  —  left name block
+   CRITICAL: visibility:hidden prevents any flash before .in
 ══════════════════════════════════════ */
 .hero-name {
   position: absolute;
@@ -194,20 +170,26 @@
   padding: 0 5rem;
   max-width: 55%;
 
-  /* Hidden state: shifted left + invisible */
   opacity: 0;
+  visibility: hidden;
   transform: translateX(-48px);
   transition:
-    opacity  1s cubic-bezier(0.22, 1, 0.36, 1) 0s,
-    transform 1s cubic-bezier(0.22, 1, 0.36, 1) 0s;
+    opacity    1s cubic-bezier(0.22, 1, 0.36, 1),
+    transform  1s cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0s linear 1s; /* hide again only after fade completes (not needed here but safe) */
 }
 
 .hero-name.in {
   opacity: 1;
+  visibility: visible;
   transform: translateX(0);
+  transition:
+    opacity    1s cubic-bezier(0.22, 1, 0.36, 1),
+    transform  1s cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0s linear 0s;
 }
 
-/* Eyebrow line */
+/* Eyebrow */
 .hero-name-eyebrow {
   display: flex;
   align-items: center;
@@ -233,7 +215,7 @@
   flex-shrink: 0;
 }
 
-/* Title — stacked word-by-word, stagger via nth-child done with delays in .in */
+/* Title — staggered per-word */
 .hero-title {
   display: flex;
   flex-direction: column;
@@ -247,7 +229,6 @@
   font-weight: 300;
   color: #faf6ee;
   letter-spacing: -0.02em;
-
   opacity: 0;
   transform: translateY(22px);
   transition: opacity 0.8s ease 0.1s, transform 0.8s ease 0.1s;
@@ -261,7 +242,6 @@
   color: #c9a84c;
   letter-spacing: -0.02em;
   margin-left: 0.08em;
-
   opacity: 0;
   transform: translateY(22px);
   transition: opacity 0.8s ease 0.22s, transform 0.8s ease 0.22s;
@@ -275,13 +255,11 @@
   letter-spacing: 0.32em;
   margin-top: 0.5rem;
   margin-left: 0.1em;
-
   opacity: 0;
   transform: translateY(16px);
   transition: opacity 0.8s ease 0.38s, transform 0.8s ease 0.38s;
 }
 
-/* When parent .in, cascade into children */
 .hero-name.in .ht-del,
 .hero-name.in .ht-zen,
 .hero-name.in .ht-kizuna {
@@ -299,7 +277,6 @@
   line-height: 1.6;
   padding-left: 1.1rem;
   border-left: 2px solid rgba(201, 168, 76, 0.45);
-
   opacity: 0;
   transform: translateY(12px);
   transition: opacity 0.8s ease 0.52s, transform 0.8s ease 0.52s;
@@ -312,10 +289,10 @@
 
 /* ══════════════════════════════════════
    POST-LOAD  —  right kanji (partial crop)
+   visibility:hidden prevents flash
 ══════════════════════════════════════ */
 .hero-kanji-wrap {
   position: absolute;
-  /* Anchor to right edge, allow overflow to crop naturally */
   right: -8%;
   top: 50%;
   transform: translateY(-52%) rotate(-8deg);
@@ -323,30 +300,33 @@
   pointer-events: none;
   user-select: none;
 
-  /* Hidden state */
   opacity: 0;
-  /* Slight slide-in from right */
+  visibility: hidden;
   translate: 60px 0;
   transition:
-    opacity  1.1s cubic-bezier(0.22, 1, 0.36, 1) 0.18s,
-    translate 1.1s cubic-bezier(0.22, 1, 0.36, 1) 0.18s;
+    opacity    1.1s cubic-bezier(0.22, 1, 0.36, 1) 0.18s,
+    translate  1.1s cubic-bezier(0.22, 1, 0.36, 1) 0.18s,
+    visibility 0s linear 1.28s;
 }
 
 .hero-kanji-wrap.in {
   opacity: 1;
+  visibility: visible;
   translate: 0 0;
+  transition:
+    opacity    1.1s cubic-bezier(0.22, 1, 0.36, 1) 0.18s,
+    translate  1.1s cubic-bezier(0.22, 1, 0.36, 1) 0.18s,
+    visibility 0s linear 0s;
 }
 
 .hero-kanji {
   font-family: 'Noto Serif JP', serif;
   font-weight: 200;
-  /* Large enough so only ~2/3 shows on screen */
   font-size: clamp(380px, 50vw, 660px);
   line-height: 1;
   color: rgba(201, 168, 76, 0.13);
   -webkit-text-stroke: 1px rgba(201, 168, 76, 0.18);
   display: block;
-  /* Prevent layout shift from this oversized glyph */
   white-space: nowrap;
 }
 
@@ -364,7 +344,6 @@
     padding: 0 1.8rem;
     align-items: center;
     text-align: center;
-    /* Push text to upper portion of screen */
     top: 0;
     bottom: auto;
     justify-content: flex-start;
@@ -379,24 +358,20 @@
     padding: 0 0 0.9rem;
   }
 
-  /* Kanji sits at the bottom, centred, partially cropped */
   .hero-kanji-wrap {
     right: auto;
     left: 50%;
     top: auto;
     bottom: -4%;
     transform: translateX(-50%) rotate(-8deg);
-    translate: 0 0 !important; /* override JS-driven translate */
+    translate: 0 0 !important;
   }
 
-  /* Re-apply the slide-in on mobile: come up from below */
   .hero-kanji-wrap:not(.in) {
-    opacity: 0;
     translate: 0 60px !important;
   }
 
   .hero-kanji-wrap.in {
-    opacity: 1;
     translate: 0 0 !important;
   }
 
@@ -410,6 +385,6 @@
 
 @media (max-width: 480px) {
   .ht-del, .ht-zen { font-size: clamp(3.2rem, 15vw, 4.5rem); }
-  .ht-kizuna { font-size: clamp(1rem, 4.5vw, 1.5rem); }
-  .hero-kanji { font-size: clamp(260px, 70vw, 400px); }
+  .ht-kizuna       { font-size: clamp(1rem, 4.5vw, 1.5rem); }
+  .hero-kanji      { font-size: clamp(260px, 70vw, 400px); }
 }
