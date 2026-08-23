@@ -19,8 +19,6 @@ export default function Reservations() {
 
   return (
     <section className="reservations" id="reservations">
-      <div className="res-bg-text">RESERVE</div>
-
       <div className="res-inner">
         <div className="res-left" ref={ref}>
           <span className={`section-eyebrow fade-in ${v ? 'visible' : ''}`}>Book Your Experience</span>
