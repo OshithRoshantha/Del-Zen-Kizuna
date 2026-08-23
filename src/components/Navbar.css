@@ -5,6 +5,7 @@
   right: 0;
   z-index: 999;
   padding: 1rem 4rem;
+  background: transparent;
   transition: background 0.4s ease, padding 0.4s ease, backdrop-filter 0.4s ease;
 }
 
@@ -12,7 +13,7 @@
   background: rgba(10, 10, 10, 0.96);
   backdrop-filter: blur(12px);
   padding: 0.5rem 4rem;
-  border-bottom: 1px solid rgba(201,168,76,0.15);
+  border-bottom: 1px solid rgba(201, 168, 76, 0.15);
 }
 
 .navbar-inner {
@@ -31,14 +32,19 @@
 }
 
 .logo-img {
-  height: 72px;
+  height: 68px;
   width: auto;
-  transition: height 0.4s ease, filter 0.3s;
+  transition: height 0.4s ease, filter 0.3s, opacity 0.4s;
   filter: brightness(1);
+  /* Hide logo in navbar — only show on scroll */
+  opacity: 0;
+  pointer-events: none;
 }
 
 .navbar.scrolled .logo-img {
-  height: 56px;
+  height: 52px;
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .navbar-links {
@@ -53,12 +59,13 @@
   font-weight: 400;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: rgba(250,246,238,0.75);
+  color: rgba(250, 246, 238, 0.85);
   transition: color 0.3s;
   background: none;
   border: none;
   cursor: pointer;
   padding: 0;
+  text-shadow: 0 1px 6px rgba(0,0,0,0.8);
 }
 
 .nav-link:hover { color: #c9a84c; }
@@ -104,8 +111,8 @@
 @media (max-width: 900px) {
   .navbar { padding: 0.8rem 1.5rem; }
   .navbar.scrolled { padding: 0.5rem 1.5rem; }
-  .logo-img { height: 56px; }
-  .navbar.scrolled .logo-img { height: 46px; }
+  .logo-img { height: 52px; }
+  .navbar.scrolled .logo-img { height: 44px; }
   .hamburger { display: flex; }
 
   .navbar-links {
@@ -119,10 +126,10 @@
     align-items: flex-start;
     padding: 6rem 2.5rem;
     gap: 2rem;
-    border-left: 1px solid rgba(201,168,76,0.2);
+    border-left: 1px solid rgba(201, 168, 76, 0.2);
     transition: right 0.4s ease;
   }
 
   .navbar-links.open { right: 0; }
-  .nav-link { font-size: 0.8rem; color: rgba(250,246,238,0.85); }
+  .nav-link { font-size: 0.8rem; color: rgba(250, 246, 238, 0.85); text-shadow: none; }
 }

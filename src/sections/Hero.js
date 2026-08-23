@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './Hero.css';
 
-const INFO = [
-  { icon: '🕐', label: 'Open Daily', value: '11 AM – 11 PM' },
-  { icon: '📍', label: 'Location', value: 'Colombo, Sri Lanka' },
-  { icon: '📞', label: 'Reservations', value: '+94 77 123 4567' },
-  { icon: '🍷', label: 'BYOB', value: 'No Corkage Fee' },
+const SEGMENTS = [
+  { start: 8, end: 20 },
+  { start: 46, end: 57 },
 ];
 
 export default function Hero() {
+  const videoRef = useRef(null);
+  const segRef = useRef(0);
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
@@ -16,77 +16,66 @@ export default function Hero() {
     return () => clearTimeout(t);
   }, []);
 
-  const scrollTo = (id) => document.querySelector(id)?.scrollIntoView({ behavior: 'smooth' });
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const playSegment = (index) => {
+      const seg = SEGMENTS[index % SEGMENTS.length];
+      video.currentTime = seg.start;
+      video.play().catch(() => {});
+    };
+
+    const handleTimeUpdate = () => {
+      const v = videoRef.current;
+      if (!v) return;
+      const seg = SEGMENTS[segRef.current % SEGMENTS.length];
+      if (v.currentTime >= seg.end) {
+        segRef.current = (segRef.current + 1) % SEGMENTS.length;
+        playSegment(segRef.current);
+      }
+    };
+
+    const handleLoaded = () => {
+      segRef.current = 0;
+      playSegment(0);
+    };
+
+    video.addEventListener('loadedmetadata', handleLoaded);
+    video.addEventListener('timeupdate', handleTimeUpdate);
+
+    if (video.readyState >= 1) handleLoaded();
+
+    return () => {
+      video.removeEventListener('loadedmetadata', handleLoaded);
+      video.removeEventListener('timeupdate', handleTimeUpdate);
+    };
+  }, []);
 
   return (
     <section className="hero" id="hero">
 
-      {/* Full-bleed background: layered food image + dark overlay */}
-      <div className="hero-bg">
-        <div
-          className="hero-bg-img"
-          style={{ backgroundImage: "url('/images/meals/restaurant/dragon-prawn-fried-rice.jpg')" }}
-        />
-        <div className="hero-bg-gradient" />
-        <div className="hero-bg-noise" />
+      {/* ── Video background ── */}
+      <div className="hero-video-bg">
+        <video
+          ref={videoRef}
+          className="hero-video"
+          muted
+          playsInline
+          preload="auto"
+        >
+          <source src="/images/title_video.mp4" type="video/mp4" />
+        </video>
+        <div className="hero-video-overlay" />
       </div>
 
-      {/* Giant decorative kanji — right side */}
-      <div className={`hero-kanji ${loaded ? 'in' : ''}`} aria-hidden="true">絆</div>
-
-      {/* ── Main content ── */}
-      <div className="hero-body">
-
-        {/* Left column */}
-        <div className="hero-left">
-          <div className={`hero-eyebrow ${loaded ? 'in' : ''}`}>
-            <span className="eyebrow-line" />
-            <span>Sri Lanka's Premier Asian Fusion Dining</span>
-            <span className="eyebrow-line" />
-          </div>
-
-          <h1 className={`hero-title ${loaded ? 'in' : ''}`}>
-            <span className="ht-del">Del</span>
-            <span className="ht-zen">Zen</span>
-            <span className="ht-kizuna">Kizuna</span>
-          </h1>
-
-          <p className={`hero-tagline ${loaded ? 'in' : ''}`}>
-            Where bonds are forged<br />through flavour
-          </p>
+      {/* ── Centered logo ── */}
+      <div className={`hero-center ${loaded ? 'in' : ''}`}>
+        <div className="hero-logo-frame">
+          <div className="logo-ring logo-ring-outer" />
+          <div className="logo-ring logo-ring-inner" />
+          <img src="/images/logo.png" alt="Del Zen Kizuna" className="hero-logo-img" />
         </div>
-
-        {/* Right column — logo centrepiece */}
-        <div className="hero-right">
-          <div className={`hero-logo-frame ${loaded ? 'in' : ''}`}>
-            <div className="logo-ring logo-ring-outer" />
-            <div className="logo-ring logo-ring-inner" />
-            <img src="/images/logo.png" alt="Del Zen Kizuna" className="hero-logo-img" />
-          </div>
-        </div>
-
-      </div>
-
-      {/* Scroll indicator */}
-      <div className="hero-scroll">
-        <div className="scroll-track"><div className="scroll-thumb" /></div>
-        <span>Scroll to explore</span>
-      </div>
-
-      {/* ── Bottom info bar ── */}
-      <div className="hero-infobar">
-        {INFO.map((item, i) => (
-          <React.Fragment key={item.label}>
-            {i > 0 && <div className="infobar-sep" />}
-            <div className="infobar-item">
-              <span className="infobar-icon">{item.icon}</span>
-              <div className="infobar-text">
-                <span className="infobar-label">{item.label}</span>
-                <span className="infobar-value">{item.value}</span>
-              </div>
-            </div>
-          </React.Fragment>
-        ))}
       </div>
 
     </section>
