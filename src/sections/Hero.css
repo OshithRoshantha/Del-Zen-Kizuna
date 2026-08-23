@@ -35,8 +35,8 @@
 }
 
 /* ══════════════════════════════════════
-   PRE-LOAD  —  centred logo
-   Stays visible until video ready, then exits.
+   PRE-LOAD  —  centred logo with animated rings
+   Stays visible until video ready, then exits gracefully.
 ══════════════════════════════════════ */
 .hero-preload {
   position: absolute;
@@ -45,16 +45,19 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  background: #000;
 
   /* Start invisible */
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.9s ease;
+  visibility: hidden;
+  transition: opacity 0.8s ease, visibility 0.8s ease;
 }
 
 /* Step 1: logo fades in (page load) */
 .hero-preload.visible {
   opacity: 1;
+  visibility: visible;
   pointer-events: auto;
 }
 
@@ -62,9 +65,11 @@
 .hero-preload.exit {
   opacity: 0;
   pointer-events: none;
-  transform: scale(1.08);
+  visibility: hidden;
+  transform: scale(1.14);
   transition: opacity 0.85s cubic-bezier(0.4, 0, 0.2, 1),
-              transform 0.85s cubic-bezier(0.4, 0, 0.2, 1);
+              transform 0.85s cubic-bezier(0.4, 0, 0.2, 1),
+              visibility 0.85s ease;
 }
 
 .hero-logo-frame {
@@ -72,32 +77,89 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: clamp(200px, 28vw, 360px);
-  height: clamp(200px, 28vw, 360px);
+  width: clamp(220px, 30vw, 380px);
+  height: clamp(220px, 30vw, 380px);
 }
 
+/* ── Radiating Pulse Waves around circles ── */
+.logo-pulse-ring {
+  position: absolute;
+  inset: -12px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(201, 168, 76, 0.5);
+  box-shadow: 0 0 25px rgba(201, 168, 76, 0.35);
+  animation: ripplePulse 2.8s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+  pointer-events: none;
+}
+
+.logo-pulse-ring-delayed {
+  animation-delay: 1.4s;
+}
+
+@keyframes ripplePulse {
+  0% {
+    transform: scale(0.82);
+    opacity: 0.85;
+  }
+  100% {
+    transform: scale(1.32);
+    opacity: 0;
+  }
+}
+
+/* ── Rotating & Glowing Rings ── */
 .logo-ring {
   position: absolute;
   border-radius: 50%;
-  border: 1px solid rgba(201, 168, 76, 0.3);
-  animation: rotateRing 22s linear infinite;
+  pointer-events: none;
 }
 
+/* Outer dashed spinning golden ring */
 .logo-ring-outer {
-  inset: 0;
-  animation-direction: normal;
+  inset: -8px;
+  border: 1px dashed rgba(201, 168, 76, 0.45);
+  box-shadow: 0 0 15px rgba(201, 168, 76, 0.25);
+  animation: rotateRingClockwise 18s linear infinite;
 }
 
+/* Middle glowing orbit ring */
+.logo-ring-mid {
+  inset: 5%;
+  border: 1.5px solid transparent;
+  border-top-color: #c9a84c;
+  border-right-color: rgba(201, 168, 76, 0.3);
+  border-bottom-color: #f3d884;
+  border-left-color: rgba(201, 168, 76, 0.3);
+  box-shadow: 0 0 25px rgba(201, 168, 76, 0.4);
+  animation: rotateRingCounter 12s linear infinite;
+}
+
+/* Inner breathing ring */
 .logo-ring-inner {
-  inset: 10%;
-  border-color: rgba(201, 168, 76, 0.17);
-  animation-direction: reverse;
-  animation-duration: 15s;
+  inset: 14%;
+  border: 1px solid rgba(201, 168, 76, 0.25);
+  animation: innerGlowPulse 3s ease-in-out infinite alternate;
 }
 
-@keyframes rotateRing {
+@keyframes rotateRingClockwise {
   from { transform: rotate(0deg); }
   to   { transform: rotate(360deg); }
+}
+
+@keyframes rotateRingCounter {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(-360deg); }
+}
+
+@keyframes innerGlowPulse {
+  0% {
+    box-shadow: 0 0 10px rgba(201, 168, 76, 0.2);
+    border-color: rgba(201, 168, 76, 0.25);
+  }
+  100% {
+    box-shadow: 0 0 35px rgba(201, 168, 76, 0.65);
+    border-color: rgba(201, 168, 76, 0.75);
+  }
 }
 
 .hero-logo-img {
@@ -106,9 +168,15 @@
   object-fit: contain;
   position: relative;
   z-index: 2;
+  animation: logoFloat 4s ease-in-out infinite alternate;
   filter:
-    drop-shadow(0 0 40px rgba(201, 168, 76, 0.55))
-    drop-shadow(0 0 10px rgba(201, 168, 76, 0.25));
+    drop-shadow(0 0 45px rgba(201, 168, 76, 0.6))
+    drop-shadow(0 0 15px rgba(201, 168, 76, 0.3));
+}
+
+@keyframes logoFloat {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.03); }
 }
 
 /* ══════════════════════════════════════

@@ -43,7 +43,11 @@ export default function Hero() {
       }
     };
 
+    let hasTriggered = false;
+
     const handleLoaded = () => {
+      if (hasTriggered) return;
+      hasTriggered = true;
       segRef.current = 0;
       playSegment(0);
 
@@ -56,13 +60,23 @@ export default function Hero() {
     };
 
     video.addEventListener('loadedmetadata', handleLoaded);
-    video.addEventListener('timeupdate',     handleTimeUpdate);
+    video.addEventListener('canplay',          handleLoaded);
+    video.addEventListener('playing',          handleLoaded);
+    video.addEventListener('timeupdate',       handleTimeUpdate);
 
     if (video.readyState >= 1) handleLoaded();
 
+    // Safety fallback: ensure logo disappears even if video is slow or autoplay restricted
+    const fallbackTimer = setTimeout(() => {
+      handleLoaded();
+    }, 4000);
+
     return () => {
+      clearTimeout(fallbackTimer);
       video.removeEventListener('loadedmetadata', handleLoaded);
-      video.removeEventListener('timeupdate',     handleTimeUpdate);
+      video.removeEventListener('canplay',          handleLoaded);
+      video.removeEventListener('playing',          handleLoaded);
+      video.removeEventListener('timeupdate',       handleTimeUpdate);
     };
   }, []);
 
@@ -86,7 +100,10 @@ export default function Hero() {
       {/* ── Pre-load: centred logo (shown until video ready, then fades out) ── */}
       <div className={`hero-preload ${logoVisible ? 'visible' : ''} ${videoReady ? 'exit' : ''}`}>
         <div className="hero-logo-frame">
+          <div className="logo-pulse-ring" />
+          <div className="logo-pulse-ring logo-pulse-ring-delayed" />
           <div className="logo-ring logo-ring-outer" />
+          <div className="logo-ring logo-ring-mid" />
           <div className="logo-ring logo-ring-inner" />
           <img src="/images/logo.png" alt="Del Zen Kizuna" className="hero-logo-img" />
         </div>
