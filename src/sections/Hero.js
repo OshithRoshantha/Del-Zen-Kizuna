@@ -44,28 +44,33 @@ export default function Hero() {
 
     let hasTriggered = false;
 
+    // Jump to segment start the instant duration is known —
+    // before canplay, so the browser never plays from 0:00.
+    const onMetadata = () => {
+      video.currentTime = SEGMENTS[0].start;
+    };
+
     const onReady = () => {
       if (hasTriggered) return;
       hasTriggered = true;
 
       playSegment(0)
         .then(() => {
-          // Play succeeded — video is actually rendering
           setVideoReady(true);
           setTimeout(() => setContentIn(true), 350);
         })
         .catch(() => {
-          // Autoplay blocked — still show content after delay
           setVideoReady(true);
           setTimeout(() => setContentIn(true), 350);
         });
     };
 
-    video.addEventListener('loadedmetadata', onReady);
+    video.addEventListener('loadedmetadata', onMetadata);
     video.addEventListener('canplay',        onReady);
     video.addEventListener('timeupdate',     handleTimeUpdate);
 
-    // If video is already loaded (cached)
+    // If metadata already available (cached video)
+    if (video.readyState >= 1) onMetadata();
     if (video.readyState >= 2) onReady();
 
     // Hard fallback: show content after 5s even if video never loads
@@ -79,7 +84,7 @@ export default function Hero() {
 
     return () => {
       clearTimeout(fallback);
-      video.removeEventListener('loadedmetadata', onReady);
+      video.removeEventListener('loadedmetadata', onMetadata);
       video.removeEventListener('canplay',        onReady);
       video.removeEventListener('timeupdate',     handleTimeUpdate);
     };
