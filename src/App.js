@@ -1,15 +1,16 @@
 import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Hero from './sections/Hero';
 import About from './sections/About';
 import Directors from './sections/Directors';
 import Menu from './sections/Menu';
 import Reservations from './sections/Reservations';
-import OrderOnline from './sections/OrderOnline';
 import Ratings from './sections/Ratings';
 import Footer from './components/Footer';
+import OrderPage from './pages/OrderPage';
 
-export default function App() {
+function HomePage() {
   return (
     <>
       <Navbar />
@@ -19,10 +20,20 @@ export default function App() {
         <Directors />
         <Menu />
         <Reservations />
-        <OrderOnline />
         <Ratings />
       </main>
       <Footer />
     </>
+  );
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/order" element={<OrderPage />} />
+      </Routes>
+    </BrowserRouter>
   );
 }

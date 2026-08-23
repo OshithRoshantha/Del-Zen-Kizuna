@@ -1,8 +1,19 @@
 import React from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import './Footer.css';
 
 export default function Footer() {
-  const scrollTo = (id) => document.querySelector(id)?.scrollIntoView({ behavior: 'smooth' });
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const scrollTo = (id) => {
+    if (location.pathname !== '/') {
+      navigate('/');
+      setTimeout(() => document.querySelector(id)?.scrollIntoView({ behavior: 'smooth' }), 100);
+    } else {
+      document.querySelector(id)?.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   return (
     <footer className="footer">
@@ -26,9 +37,10 @@ export default function Footer() {
           <div className="footer-col">
             <h4>Navigate</h4>
             <ul>
-              {[['About', '#about'],['Directors', '#directors'],['Menu', '#menu'],['Reservations', '#reservations'],['Order Online', '#order']].map(([l,h]) => (
+              {[['About', '#about'],['Directors', '#directors'],['Menu', '#menu'],['Reservations', '#reservations']].map(([l,h]) => (
                 <li key={l}><button onClick={() => scrollTo(h)}>{l}</button></li>
               ))}
+              <li><button onClick={() => navigate('/order')}>Order Online</button></li>
             </ul>
           </div>
 
@@ -53,7 +65,7 @@ export default function Footer() {
       </div>
 
       <div className="footer-bottom">
-        <p>© 2024 Del Zen Kizuna. All rights reserved.</p>
+        <p>Solutions by <strong>OD Labs</strong></p>
         <p className="footer-meaning">
           <em>Del</em> · Delight &nbsp;|&nbsp; <em>Zen</em> · Harmony &nbsp;|&nbsp; <em>絆 Kizuna</em> · Bond
         </p>

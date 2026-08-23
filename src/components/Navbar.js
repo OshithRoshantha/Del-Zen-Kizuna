@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import './Navbar.css';
 
 const links = [
   { label: 'About', href: '#about' },
   { label: 'Menu', href: '#menu' },
-  { label: 'Order Online', href: '#order' },
 ];
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
@@ -19,14 +21,31 @@ export default function Navbar() {
 
   const handleNav = (href) => {
     setOpen(false);
-    const el = document.querySelector(href);
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
+    if (location.pathname !== '/') {
+      navigate('/');
+      setTimeout(() => {
+        const el = document.querySelector(href);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    } else {
+      const el = document.querySelector(href);
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const handleLogoClick = (e) => {
+    e.preventDefault();
+    if (location.pathname !== '/') {
+      navigate('/');
+    } else {
+      document.querySelector('#hero')?.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   return (
     <header className={`navbar ${scrolled ? 'scrolled' : ''}`}>
       <div className="navbar-inner">
-        <a href="#hero" className="navbar-logo" onClick={(e) => { e.preventDefault(); handleNav('#hero'); }}>
+        <a href="/" className="navbar-logo" onClick={handleLogoClick}>
           <img src="/images/logo.png" alt="Del Zen Kizuna" className="logo-img" />
         </a>
 
@@ -36,7 +55,10 @@ export default function Navbar() {
               {l.label}
             </button>
           ))}
-          <button className="nav-cta" onClick={() => handleNav('#reservations')}>
+          <button className="nav-link" onClick={() => { setOpen(false); navigate('/order'); }}>
+            Order Online
+          </button>
+          <button className="nav-cta" onClick={() => { setOpen(false); handleNav('#reservations'); }}>
             Reserve a Table
           </button>
         </nav>
